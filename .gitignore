@@ -9,6 +9,7 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
+!.work/mono-copilot.md
 
 # testing
 /coverage
