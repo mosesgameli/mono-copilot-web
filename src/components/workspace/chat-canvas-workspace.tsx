@@ -3,49 +3,48 @@
 import { useState } from "react";
 
 import { WorkspaceShell } from "./WorkspaceShell";
-import { useWorkspaceFiles } from "./hooks/useWorkspaceFiles";
-import { useWorkspaceChat } from "./hooks/useWorkspaceChat";
+import { useWorkspace } from "./providers/useWorkspace";
 import { AgentChatPane } from "./agent_chat/Agent_Chat_Pane";
 import {CanvasPane} from "./canvas/CanvasPane";
+import { WorkspaceProvider } from "./providers/WorkspaceProvider";
 
 
 export function ChatCanvasWorkspace() {
-  const workspaceFiles = useWorkspaceFiles();
-  const workspaceChat = useWorkspaceChat();
+  const { files, chat } = useWorkspace()
   
   const [mobileChatOpen, setMobileChatOpen] = useState(false); 
 
   return (
-    <>
+    <WorkspaceProvider>
       <WorkspaceShell
         mobileChatOpen={mobileChatOpen}
         onClose={() => setMobileChatOpen(false)}
         chat={
-              <AgentChatPane
-              messages={workspaceChat.messages}
-              isAgentTyping={workspaceChat.isAgentTyping}
-              onClose={() => setMobileChatOpen(false)}
-              onSendMessage={workspaceChat.handleSendMessage}
-            />
+          <AgentChatPane
+            messages={chat.messages}
+            isAgentTyping={chat.isAgentTyping}
+            onClose={() => setMobileChatOpen(false)}
+            onSendMessage={chat.handleSendMessage}
+          />
         }
         canvas={
           <CanvasPane
-            files={workspaceFiles.files}
-            activeFile={workspaceFiles.activeFile}
-            activeFileId={workspaceFiles.activeFileId}
-            isFileMenuOpen={workspaceFiles.isFileMenuOpen}
-            fileCursor={workspaceFiles.fileCursor}
-            fileMenuRef={workspaceFiles.fileMenuRef}
-            fileMenuButtonRef={workspaceFiles.fileMenuButtonRef}
-            onToggleFileMenu={workspaceFiles.onToggleFileMenu}
-            onFileHover={workspaceFiles.setFileCursor}
-            onFileMenuKeyDown={workspaceFiles.handleFileMenuKeyDown}
-            onChangeFileContent={workspaceFiles.onChangeFileContent}
+            files={files.files}
+            activeFile={files.activeFile}
+            activeFileId={files.activeFileId}
+            isFileMenuOpen={files.isFileMenuOpen}
+            fileCursor={files.fileCursor}
+            fileMenuRef={files.fileMenuRef}
+            fileMenuButtonRef={files.fileMenuButtonRef}
+            onToggleFileMenu={files.onToggleFileMenu}
+            onFileHover={files.setFileCursor}
+            onFileMenuKeyDown={files.handleFileMenuKeyDown}
+            onChangeFileContent={files.onChangeFileContent}
             onOpenChat={() => setMobileChatOpen(true)}
-            onSelectFile={workspaceFiles.onSelectFile}
+            onSelectFile={files.onSelectFile}
           />
         }
       />
-    </>
+    </WorkspaceProvider>
   );
-}
+    }
