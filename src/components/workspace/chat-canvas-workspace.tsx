@@ -6,7 +6,7 @@ import { WorkspaceShell } from "./WorkspaceShell";
 import { useWorkspace } from "./providers/useWorkspace";
 import { AgentChatPane } from "./agent_chat/Agent_Chat_Pane";
 import {CanvasPane} from "./canvas/CanvasPane";
-import { WorkspaceProvider } from "./providers/WorkspaceProvider";
+
 
 
 export function ChatCanvasWorkspace() {
@@ -15,7 +15,6 @@ export function ChatCanvasWorkspace() {
   const [mobileChatOpen, setMobileChatOpen] = useState(false); 
 
   return (
-    <WorkspaceProvider>
       <WorkspaceShell
         mobileChatOpen={mobileChatOpen}
         onClose={() => setMobileChatOpen(false)}
@@ -45,6 +44,5 @@ export function ChatCanvasWorkspace() {
           />
         }
       />
-    </WorkspaceProvider>
   );
     }
