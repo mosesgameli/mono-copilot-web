@@ -6,9 +6,8 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 function ThemeProvider({ children }: { children: React.ReactNode }) {
   return (
     <NextThemesProvider
-      enableSystem
       attribute="class"
-      defaultTheme="system"
+      defaultTheme="light"
       disableTransitionOnChange
     >
       {children}
@@ -17,5 +16,9 @@ function ThemeProvider({ children }: { children: React.ReactNode }) {
 }
 
 export function RootProvider({ children }: { children: React.ReactNode }) {
-  return <ThemeProvider>{children}</ThemeProvider>;
+  return (
+    <ThemeProvider>
+      {children}
+    </ThemeProvider>
+  );
 }

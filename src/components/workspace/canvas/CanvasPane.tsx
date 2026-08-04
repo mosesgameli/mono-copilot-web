@@ -1,14 +1,15 @@
 import { Button, buttonVariants } from "@mono-copilot/components/ui/button";
 import type { CanvasFile } from "../types/workspace";
-import type { KeyboardEvent, RefObject } from "react";
+import { type KeyboardEvent, type RefObject } from "react";
 import { FileText, Menu, MessageSquare } from "lucide-react";
 import { cn } from "@mono-copilot/lib/utils";
 import { ThemeToggle } from "@mono-copilot/components/theme-toggle";
+import { DocumentEditor } from "./DocumentEditor";
 
 type CanvasPaneProps = {
   files: CanvasFile[];
   activeFile: CanvasFile | undefined;
-  activeFileId: string;
+  activefileid: string;
 
   isFileMenuOpen: boolean;
   fileCursor: number;
@@ -16,8 +17,10 @@ type CanvasPaneProps = {
   fileMenuRef: RefObject<HTMLDivElement | null>;
   fileMenuButtonRef: RefObject<HTMLButtonElement | null>;
 
+
+  
   onToggleFileMenu: () => void;
-  onSelectFile: (fileId: string) => void;
+  onSelectFile: (fileid: string) => void;
   onFileHover: (index: number) => void;
   onFileMenuKeyDown: (
     event: KeyboardEvent<HTMLDivElement>
@@ -29,7 +32,7 @@ type CanvasPaneProps = {
 export function CanvasPane({
   files,
   activeFile,
-  activeFileId,
+  activefileid,
   isFileMenuOpen,
   fileCursor,
   fileMenuRef,
@@ -41,6 +44,7 @@ export function CanvasPane({
   onChangeFileContent,
   onOpenChat,
 }: CanvasPaneProps){
+
 
   return (
     <div className="relative flex h-full min-h-0 flex-col">
@@ -76,10 +80,10 @@ export function CanvasPane({
                     <button
                       key={file.id}
                       role="option"
-                      aria-selected={file.id === activeFileId}
+                      aria-selected={file.id === activefileid}
                       className={cn(
                         "flex w-full items-center justify-between rounded-lg px-2.5 py-2 text-left text-sm transition",
-                        file.id === activeFileId
+                        file.id === activefileid
                           ? "bg-accent text-accent-foreground"
                           : "hover:bg-muted",
                         index === fileCursor ? "ring-2 ring-ring/40" : "",
@@ -133,20 +137,10 @@ export function CanvasPane({
               <label className="sr-only" htmlFor="canvas-doc">
                 Active document editor
               </label>
-              {activeFile? (
-                <textarea
-                id="canvas-doc"
-                value={activeFile?.content ?? ""}
-                onChange={(event) => onChangeFileContent(event.target.value)}
-                className="h-full w-full resize-none rounded-lg bg-transparent p-4 font-mono text-[14px] leading-6 outline-none"
-                spellCheck={false}/>
-              ) : (
-                <div className="flex h-full items-center justify-center rounded-lg bg-muted/50 text-sm text-muted-foreground">
-                  Select a file to begin editing.
-                </div>
-
-              )}
-  
+              <DocumentEditor
+                activeFile={activeFile}
+                onChangeFileContent={onChangeFileContent}
+              />
             </div>
           </div>
           <div className="absolute bottom-4 right-4 z-40">

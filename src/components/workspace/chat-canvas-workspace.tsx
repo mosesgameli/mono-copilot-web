@@ -30,7 +30,7 @@ export function ChatCanvasWorkspace() {
           <CanvasPane
             files={files.files}
             activeFile={files.activeFile}
-            activeFileId={files.activeFileId}
+            activefileid={files.activeFileId}
             isFileMenuOpen={files.isFileMenuOpen}
             fileCursor={files.fileCursor}
             fileMenuRef={files.fileMenuRef}

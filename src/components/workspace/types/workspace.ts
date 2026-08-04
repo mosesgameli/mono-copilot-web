@@ -13,3 +13,9 @@ export type CanvasFile = {
   isDirty: boolean;
 };
 
+export type WorkspaceSelection = {
+  fileId: string;
+  selectedText: string;
+  startOffset: number;
+  endOffset: number;
+};
